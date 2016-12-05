@@ -13,8 +13,11 @@
 		08C174DE1DF40EEF00583DEE /* JSONObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08C174DC1DF40EEF00583DEE /* JSONObject.xcdatamodeld */; };
 		08C174E01DF40EEF00583DEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C174DF1DF40EEF00583DEE /* Assets.xcassets */; };
 		08C174E31DF40EEF00583DEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174E11DF40EEF00583DEE /* LaunchScreen.storyboard */; };
-		08C174EE1DF40EEF00583DEE /* JSONObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C174ED1DF40EEF00583DEE /* JSONObjectTests.swift */; };
 		08C174F91DF40EEF00583DEE /* JSONObjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C174F81DF40EEF00583DEE /* JSONObjectUITests.swift */; };
+		08C175081DF40F3A00583DEE /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175061DF40F3A00583DEE /* JSONObject.swift */; };
+		08C1750B1DF40F3A00583DEE /* JSONObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175071DF40F3A00583DEE /* JSONObjectTests.swift */; };
+		08C175131DF41ADB00583DEE /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */; };
+		08C175141DF41AF600583DEE /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +47,14 @@
 		08C174E21DF40EEF00583DEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08C174E41DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08C174E91DF40EEF00583DEE /* JSONObjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONObjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		08C174ED1DF40EEF00583DEE /* JSONObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObjectTests.swift; sourceTree = "<group>"; };
 		08C174EF1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08C174F41DF40EEF00583DEE /* JSONObjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONObjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174F81DF40EEF00583DEE /* JSONObjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONObjectUITests.swift; sourceTree = "<group>"; };
 		08C174FA1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08C175061DF40F3A00583DEE /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
+		08C175071DF40F3A00583DEE /* JSONObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObjectTests.swift; sourceTree = "<group>"; };
+		08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataClass.swift"; path = "../TestEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataProperties.swift"; path = "../TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,10 @@
 		08C174D41DF40EEF00583DEE /* JSONObject */ = {
 			isa = PBXGroup;
 			children = (
+				08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */,
+				08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */,
+				08C175061DF40F3A00583DEE /* JSONObject.swift */,
+				08C175071DF40F3A00583DEE /* JSONObjectTests.swift */,
 				08C174D51DF40EEF00583DEE /* AppDelegate.swift */,
 				08C174D71DF40EEF00583DEE /* ViewController.swift */,
 				08C174D91DF40EEF00583DEE /* Main.storyboard */,
@@ -113,7 +123,6 @@
 		08C174EC1DF40EEF00583DEE /* JSONObjectTests */ = {
 			isa = PBXGroup;
 			children = (
-				08C174ED1DF40EEF00583DEE /* JSONObjectTests.swift */,
 				08C174EF1DF40EEF00583DEE /* Info.plist */,
 			);
 			path = JSONObjectTests;
@@ -265,8 +274,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08C175081DF40F3A00583DEE /* JSONObject.swift in Sources */,
+				08C175131DF41ADB00583DEE /* TestEntity+CoreDataClass.swift in Sources */,
 				08C174DE1DF40EEF00583DEE /* JSONObject.xcdatamodeld in Sources */,
 				08C174D81DF40EEF00583DEE /* ViewController.swift in Sources */,
+				08C175141DF41AF600583DEE /* TestEntity+CoreDataProperties.swift in Sources */,
 				08C174D61DF40EEF00583DEE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C174EE1DF40EEF00583DEE /* JSONObjectTests.swift in Sources */,
+				08C1750B1DF40F3A00583DEE /* JSONObjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
