@@ -1,8 +1,10 @@
 # JSONObject-Temporary-
 
-Example usage
+Apple provides a way to get JSON from a URL but after that generally parsing is left up to you, and it's generally not the cleanest of affairs. This is my personal take on providing a solution.
 
-given the JSON of
+## How to
+
+**Given the JSON of**
 
 ```swift
 let jsonData = 
@@ -38,7 +40,7 @@ let nameOfSecondStuff: String = try! jsonObject.value(forKeyPath: "second.name")
 ```	
 So dictionaries should be pretty straight forward each successive key inside it's parent dicitonary is prepended with a "."
 
-e.g "this.that.thisOneInsideThat.other"
+**e.g** "this.that.thisOneInsideThat.other"
 
 For arrays however the syntax is a little different
 ```swift
@@ -46,8 +48,6 @@ let upperCaseAlphabetFirstLetter: [String] = try! jsonObject.value(forKeyPath: "
 let thirdNumericalItem: [String] = try! jsonObject.value(forKeyPath: "second.data[2]") // '3'
 ```	
 just place the index you wish to access inside square brackets, this also works for nested array
-
-given
 ```swift
 let nestedJSONArray =
 [
@@ -77,7 +77,7 @@ leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[0]") as String)") /
 leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[1]") as String)") // 'good bye. and good'
 leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[2]") as String).") // 'good bye. and good luck.'
 ```	
-# Collection Enumeration
+## Collection Enumeration
 
 If however instead of manually accessing the collection for each key and or index and you just wish to iterate over a known dictionary or array you can do so like so.
 ```swift
@@ -114,11 +114,11 @@ jsonObject.enumerateObject(atKeyPath: "managers") { (keyIndex, element) in
 // element: {"dept": "RND", "salary": 122} for key gavin
 ```
 
-# Object Enumeration
+## Object Enumeration
 
 Generally you will pull values from the json and will be assigned to an instance variable of a class, the larger the class the more tedious this can become, JSONObject however offers a way for you to dictate how each class will map the values and when enumerating you will get the object with the mapped values assigned.
 
-first your class should conform to the protocol JSONAble
+**first your class should conform to the protocol JSONAble**
 
 ``` swift
 protocol JSONAble 
@@ -127,7 +127,7 @@ protocol JSONAble
 	func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws
 }
 ```
-example
+**Example**
 ```swift
 fileprivate class JSONableTestable: JSONAble
 {
@@ -175,8 +175,8 @@ let jsonData =
 	// 'third'
 	// 'example'
 ```	
-# Core Data
+## Core Data
 
 You may notice that the JSONAble protocol and a few of the other method have a method for an NSManagedObject context, this is in case you are using core data objects, you can pass the context through to create the objects inside the context.
 
-# Exception Handling TBD
+## Exception Handling TBD
