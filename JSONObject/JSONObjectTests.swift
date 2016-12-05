@@ -27,8 +27,8 @@ fileprivate class JSONableTestable: JSONAble
     
     func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws {
         
-        self.id = try JSONObject.valueForKey("\(keyPath).id")
-        self.titleText = try JSONObject.valueForKey("\(keyPath).titleText")
+        self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
+        self.titleText = try JSONObject.value(forKeyPath: "\(keyPath).titleText")
     }
 }
 
@@ -66,8 +66,8 @@ class JSONObjectTests: XCTestCase {
             private(set) var posts: [[String: AnyObject]]?
             
             override func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String = "[0]") throws {
-                self.id = try JSONObject.valueForKey("\(keyPath).id")
-                self.posts = try JSONObject.valueForKey("\(keyPath).posts")
+                self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
+                self.posts = try JSONObject.value(forKeyPath: "\(keyPath).posts")
             }
         }
         
@@ -115,8 +115,8 @@ class JSONObjectTests: XCTestCase {
             }
             
             func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String = "") throws {
-                self.id = try JSONObject.valueForKey("\(keyPath).id")
-                self.posts = try JSONObject.valueForKey("\(keyPath).posts")
+                self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
+                self.posts = try JSONObject.value(forKeyPath: "\(keyPath).posts")
             }
         }
         
@@ -350,8 +350,8 @@ class JSONObjectTests: XCTestCase {
         let SUT = JSONObject(collection: data)
 
         // Act
-        let title: String = try! SUT.valueForKey("category.posts[0].titleText")
-        let id: String = try! SUT.valueForKey("category.posts[0].id")
+        let title: String = try! SUT.value(forKeyPath: "category.posts[0].titleText")
+        let id: String = try! SUT.value(forKeyPath: "category.posts[0].id")
         
         XCTAssertNotNil(title)
         XCTAssertEqual("test1", title)
@@ -375,15 +375,15 @@ class JSONObjectTests: XCTestCase {
         let SUT = JSONObject(collection: data)
         
         // Act
-        var title: String = try! SUT.valueForKey("category.posts[0].titleText")
-        var id: String = try! SUT.valueForKey("category.posts[0].id")
+        var title: String = try! SUT.value(forKeyPath: "category.posts[0].titleText")
+        var id: String = try! SUT.value(forKeyPath: "category.posts[0].id")
         
         XCTAssertNotNil(title)
         XCTAssertEqual("test3", title)
         XCTAssertEqual("3", id)
         
-        title = try! SUT.valueForKey("category.posts[1].titleText")
-        id = try! SUT.valueForKey("category.posts[1].id")
+        title = try! SUT.value(forKeyPath: "category.posts[1].titleText")
+        id = try! SUT.value(forKeyPath: "category.posts[1].id")
         
         XCTAssertNotNil(title)
         XCTAssertEqual("test4", title)
@@ -405,11 +405,11 @@ class JSONObjectTests: XCTestCase {
         let SUT = JSONObject(collection: data)
         
         // Act
-        var testString: String = try! SUT.valueForKey("category.posts[0][0]")
-        testString.append(try! SUT.valueForKey("category.posts[0][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][4]") as String)
+        var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][4]") as String)
         
         XCTAssertEqual("test1", testString)
     }
@@ -430,19 +430,19 @@ class JSONObjectTests: XCTestCase {
         let SUT = JSONObject(collection: data)
         
         // Act
-        var testString: String = try! SUT.valueForKey("category.posts[0][0]")
-        testString.append(try! SUT.valueForKey("category.posts[0][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][4]") as String)
+        var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][4]") as String)
         
         XCTAssertEqual("test1", testString)
         
-        testString = try! SUT.valueForKey("category.posts[1][0]")
-        testString.append(try! SUT.valueForKey("category.posts[1][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][4]") as String)
+        testString = try! SUT.value(forKeyPath: "category.posts[1][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][4]") as String)
         
         XCTAssertEqual("value", testString)
     }
@@ -466,32 +466,32 @@ class JSONObjectTests: XCTestCase {
         let SUT = JSONObject(collection: data)
         
         // Act
-        var testString: String = try! SUT.valueForKey("category.posts[0][0]")
-        testString.append(try! SUT.valueForKey("category.posts[0][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[0][4]") as String)
+        var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[0][4]") as String)
         
         XCTAssertEqual("test1", testString)
         
-        testString = try! SUT.valueForKey("category.posts[1][0]")
-        testString.append(try! SUT.valueForKey("category.posts[1][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[1][4]") as String)
+        testString = try! SUT.value(forKeyPath: "category.posts[1][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[1][4]") as String)
         
         XCTAssertEqual("value", testString)
         
-        testString = try! SUT.valueForKey("category.posts[2].id[0][0]")
-        testString.append(try! SUT.valueForKey("category.posts[2].id[0][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[0][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[0][3]") as String)
+        testString = try! SUT.value(forKeyPath: "category.posts[2].id[0][0]")
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[0][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[0][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[0][3]") as String)
         testString.append(" ")
-        testString.append(try! SUT.valueForKey("category.posts[2].id[1][0]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[1][1]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[1][2]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[1][3]") as String)
-        testString.append(try! SUT.valueForKey("category.posts[2].id[1][4]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[1][0]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[1][1]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[1][2]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[1][3]") as String)
+        testString.append(try! SUT.value(forKeyPath: "category.posts[2].id[1][4]") as String)
         
         XCTAssertEqual("kyle crane", testString)
     }

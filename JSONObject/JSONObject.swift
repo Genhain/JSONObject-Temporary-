@@ -42,7 +42,7 @@ final class JSONObject
         }
     }
     
-    func valueForKey<A: Any>(_ key: String) throws -> A {
+    func value<A: Any>( forKeyPath key: String) throws -> A {
         
         let valueAtPath = try? self.valueAtPath(key)
         
@@ -127,11 +127,11 @@ final class JSONObject
         
         var retVal: JSONObject?
         
-        if let dict: [String: AnyObject] = try? valueForKey(key) {
+        if let dict: [String: AnyObject] = try? value(forKeyPath: key) {
             retVal = JSONObject(collection: dict)
         }
         
-        if let array: [AnyObject] = try? valueForKey(key) {
+        if let array: [AnyObject] = try? value(forKeyPath: key) {
             retVal = JSONObject(collection: array)
         }
         
