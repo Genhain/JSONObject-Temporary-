@@ -28,7 +28,7 @@ you can extract the first two dictionaries like so
 	
 and you can then access the values normally as one would traverse a swift collection.
 
-If However you wish to iterated through the json and get a value directly, you can.
+If however you wish to iterate through the json and get a value directly, you can.
 
 	let nameOfFirstStuff: String = jsonObject.value(forKeyPath: "first.name")
 	let nameOfSecondStuff: String = jsonObject.value(forKeyPath: "second.name")
@@ -76,7 +76,7 @@ given
 	
 # Collection Enumeration
 
-if however instead of manually accessing the collection for each key and or index and you just wish to iterate over a known dictionary or array you can do so like so.
+If however instead of manually accessing the collection for each key and or index and you just wish to iterate over a known dictionary or array you can do so like so.
 
 	let jsonData = 
 	[
@@ -109,3 +109,68 @@ if however instead of manually accessing the collection for each key and or inde
 	
 	// element: {"dept": "HR", "salary": 123} for key racheal
 	// element: {"dept": "RND", "salary": 122} for key gavin
+
+# Object Enumeration
+
+Generally you will pull values from the json and will be assigned to an instance variable of a class, the larger the class the more tedious this can become, JSONObject however offers a way for you to dictate how each class will map the values and when enumerating you will get the object with the mapped values assigned.
+
+first your class should conform to the protocol JSONAble
+
+	protocol JSONAble 
+	{
+   		static func create(inContext context: NSManagedObjectContext) -> Self
+    		func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws
+	}
+	
+example
+
+	fileprivate class JSONableTestable: JSONAble
+	{
+	    private(set) var text: String?
+	    private(set) var id: String?
+
+	    static func create(inContext context: NSManagedObjectContext) -> Self {
+		return .init()
+	    }
+
+	    func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws {
+
+		self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
+		self.text = try JSONObject.value(forKeyPath: "\(keyPath).text")
+	    }
+	}
+	
+	let jsonData =
+	[
+		"testables":
+		[
+			["id": "first"
+			"text": "Welcome"],
+			["id": "second"
+			"text": "to my"],
+			["id": "third"
+			"text": "example"]
+		]
+	]
+	
+	let jsonObject = JSONObject(collection: jsonData)
+	
+	jsonObject.enumerateObjects(ofType: JSONableTestable.self, forKeyPath: "testables") { (jsonableObject) in
+            
+	    //The closure returns a JSONAble so, if you want to access the variables you need to cast it.
+            guard let jsonTestable = jsonableObject as? JSONableTestable else { return }
+            
+		print("\(jsonTestable.id)")
+		print("\(jsonTestable.text)")
+        }
+	
+	// 'first'
+	// 'Welcome'
+	// 'second'
+	// 'to my'
+	// 'third'
+	// 'example'
+		
+# Core Data
+
+You may notice that the JSONAble protocol and a few of the other method have a method for an NSManagedObject context, this is in case you are using core data objects, you can pass the context through to create the objects inside the context.
