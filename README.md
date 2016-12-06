@@ -1,4 +1,5 @@
-# JSONObject-Temporary-
+# ParSON
+#### A lightweight JSON to swift Parser
 
 Apple provides a way to get JSON from a URL but after that generally parsing is left up to you, and it's generally not the cleanest of affairs. This is my personal take on providing a solution.
 
