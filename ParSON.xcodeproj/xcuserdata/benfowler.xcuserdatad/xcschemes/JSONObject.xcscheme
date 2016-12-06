@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "08C174D11DF40EEF00583DEE"
-               BuildableName = "JSONObject.app"
-               BlueprintName = "JSONObject"
-               ReferencedContainer = "container:JSONObject.xcodeproj">
+               BuildableName = "ParSON.app"
+               BlueprintName = "ParSON"
+               ReferencedContainer = "container:ParSON.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "08C174E81DF40EEF00583DEE"
-               BuildableName = "JSONObjectTests.xctest"
-               BlueprintName = "JSONObjectTests"
-               ReferencedContainer = "container:JSONObject.xcodeproj">
+               BuildableName = "ParSONTests.xctest"
+               BlueprintName = "ParSONTests"
+               ReferencedContainer = "container:ParSON.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "08C174F31DF40EEF00583DEE"
-               BuildableName = "JSONObjectUITests.xctest"
-               BlueprintName = "JSONObjectUITests"
-               ReferencedContainer = "container:JSONObject.xcodeproj">
+               BuildableName = "ParSONUITests.xctest"
+               BlueprintName = "ParSONUITests"
+               ReferencedContainer = "container:ParSON.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08C174D11DF40EEF00583DEE"
-            BuildableName = "JSONObject.app"
-            BlueprintName = "JSONObject"
-            ReferencedContainer = "container:JSONObject.xcodeproj">
+            BuildableName = "ParSON.app"
+            BlueprintName = "ParSON"
+            ReferencedContainer = "container:ParSON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08C174D11DF40EEF00583DEE"
-            BuildableName = "JSONObject.app"
-            BlueprintName = "JSONObject"
-            ReferencedContainer = "container:JSONObject.xcodeproj">
+            BuildableName = "ParSON.app"
+            BlueprintName = "ParSON"
+            ReferencedContainer = "container:ParSON.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08C174D11DF40EEF00583DEE"
-            BuildableName = "JSONObject.app"
-            BlueprintName = "JSONObject"
-            ReferencedContainer = "container:JSONObject.xcodeproj">
+            BuildableName = "ParSON.app"
+            BlueprintName = "ParSON"
+            ReferencedContainer = "container:ParSON.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

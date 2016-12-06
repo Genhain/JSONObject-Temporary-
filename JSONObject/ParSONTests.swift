@@ -1,7 +1,7 @@
 
 import XCTest
 import CoreData
-@testable import JSONObject
+@testable import ParSON
 
 func setUpInMemoryPersistentContainer() -> NSPersistentContainer {
     let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
@@ -16,7 +16,7 @@ func setUpInMemoryPersistentContainer() -> NSPersistentContainer {
     return persistentContainer
 }
 
-fileprivate class JSONableTestable: JSONAble
+fileprivate class JSONableTestable: ParSONDeserializable
 {
     private(set) var titleText: String?
     fileprivate(set) var id: String?
@@ -25,14 +25,14 @@ fileprivate class JSONableTestable: JSONAble
         return .init()
     }
     
-    func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws {
-        
-        self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
-        self.titleText = try JSONObject.value(forKeyPath: "\(keyPath).titleText")
+    fileprivate func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws {
+        self.id = try parSONObject.value(forKeyPath: "\(keyPath).id")
+        self.titleText = try parSONObject.value(forKeyPath: "\(keyPath).titleText")
+
     }
 }
 
-class JSONObjectTests: XCTestCase {
+class ParSONTests: XCTestCase {
     
     var inMemoryPersistentContainer: NSPersistentContainer!
     
@@ -65,18 +65,19 @@ class JSONObjectTests: XCTestCase {
         {
             private(set) var posts: [[String: AnyObject]]?
             
-            override func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String = "[0]") throws {
-                self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
-                self.posts = try JSONObject.value(forKeyPath: "\(keyPath).posts")
+            override func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String = "[0]") throws {
+                
+                self.id = try parSONObject.value(forKeyPath: "\(keyPath).id")
+                self.posts = try parSONObject.value(forKeyPath: "\(keyPath).posts")
             }
         }
         
         // Act
         let spy = JSONableTestableWithPosts()
         
-        let jsonObj = JSONObject(collection: data)
+        let jsonObj = ParSON(collection: data)
         
-        try? spy.fromJSON(jsonObj, context: inMemoryPersistentContainer.viewContext)
+        try? spy.deserialize(jsonObj, context: inMemoryPersistentContainer.viewContext)
         
         // Assert
         XCTAssertEqual(spy.id, "1")
@@ -105,7 +106,7 @@ class JSONObjectTests: XCTestCase {
                      "id": "4"]]]
         ]
         
-        class JSONAbleTester: JSONAble
+        class JSONAbleTester: ParSONDeserializable
         {
             private(set) var id: String?
             private(set) var posts: [[String: AnyObject]]?
@@ -114,18 +115,18 @@ class JSONObjectTests: XCTestCase {
                 return .init()
             }
             
-            func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String = "") throws {
-                self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
-                self.posts = try JSONObject.value(forKeyPath: "\(keyPath).posts")
+            fileprivate func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String = "") throws {
+                self.id = try parSONObject.value(forKeyPath: "\(keyPath).id")
+                self.posts = try parSONObject.value(forKeyPath: "\(keyPath).posts")
             }
         }
         
         // Act
         let spy = JSONAbleTester()
         
-        let jsonObj = JSONObject(collection: data)
+        let jsonObj = ParSON(collection: data)
         
-        try? spy.fromJSON(jsonObj, context: inMemoryPersistentContainer.viewContext, keyPath: "[0]")
+        try? spy.deserialize(jsonObj, context: inMemoryPersistentContainer.viewContext, keyPath: "[0]")
         
         // Assert
         XCTAssertEqual(spy.id, "1")
@@ -134,7 +135,7 @@ class JSONObjectTests: XCTestCase {
         XCTAssertEqual(spy.posts?[1]["titleText"] as! String, "test2")
         XCTAssertEqual(spy.posts?[1]["id"] as! String, "2")
         
-        try? spy.fromJSON(jsonObj, context: inMemoryPersistentContainer.viewContext, keyPath: "[1]")
+        try? spy.deserialize(jsonObj, context: inMemoryPersistentContainer.viewContext, keyPath: "[1]")
         
         XCTAssertEqual(spy.id, "2")
         XCTAssertEqual(spy.posts?[0]["titleText"] as! String, "test3")
@@ -156,7 +157,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -185,7 +186,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -209,7 +210,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -234,7 +235,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -255,7 +256,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -276,7 +277,7 @@ class JSONObjectTests: XCTestCase {
         ]
         
         // Act
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Assert
         var index = 0
@@ -299,7 +300,7 @@ class JSONObjectTests: XCTestCase {
         ] as [String : Any]
         
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         
         // Act
@@ -347,7 +348,7 @@ class JSONObjectTests: XCTestCase {
                      "id": "1"]]]
         ]
 
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
 
         // Act
         let title: String = try! SUT.value(forKeyPath: "category.posts[0].titleText")
@@ -372,7 +373,7 @@ class JSONObjectTests: XCTestCase {
                          "id": "4"]]]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var title: String = try! SUT.value(forKeyPath: "category.posts[0].titleText")
@@ -402,7 +403,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
@@ -427,7 +428,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
@@ -463,7 +464,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var testString: String = try! SUT.value(forKeyPath: "category.posts[0][0]")
@@ -519,7 +520,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var count = 0
@@ -563,7 +564,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var count = 0
@@ -599,7 +600,7 @@ class JSONObjectTests: XCTestCase {
                 ]
         ]
         
-        let SUT = JSONObject(collection: data)
+        let SUT = ParSON(collection: data)
         
         // Act
         var count = 0
@@ -614,4 +615,6 @@ class JSONObjectTests: XCTestCase {
         
         XCTAssertEqual(count, 3)
     }
+    
+    
 }

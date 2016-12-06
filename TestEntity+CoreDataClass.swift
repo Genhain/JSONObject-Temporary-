@@ -9,13 +9,13 @@
 import Foundation
 import CoreData
 
-public class TestEntity: NSManagedObject, JSONAble
+public class TestEntity: NSManagedObject, ParSONDeserializable
 {
     private(set) static var wasCreateCalled = false
     private(set) static var lastContextForCreate: NSManagedObjectContext?
     
     private(set) var wasFromJSONCalled = false
-    private(set) var lastJsonObject: JSONObject?
+    private(set) var lastJsonObject: ParSON?
     private(set) var lastContextForFromJSON: NSManagedObjectContext?
     private(set) var lastKeyPath: String?
     
@@ -25,9 +25,9 @@ public class TestEntity: NSManagedObject, JSONAble
         return .init(entity: NSEntityDescription.entity(forEntityName: "TestEntity", in: context)!, insertInto: context)
     }
     
-    func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws {
+    func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws {
         self.wasFromJSONCalled = true
-        self.lastJsonObject = JSONObject
+        self.lastJsonObject = parSONObject
         self.lastContextForFromJSON = context
         self.lastKeyPath = keyPath
     }

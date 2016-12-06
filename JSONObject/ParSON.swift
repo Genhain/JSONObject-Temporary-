@@ -10,19 +10,19 @@ import Foundation
 import UIKit
 import CoreData
 
-enum JSONError : Error {
+enum ParSONError : Error {
     case NoValueForKey(String)
     case IndexOutOfRange
     case TypeMismatch
     case InvalidString
 }
 
-protocol JSONAble {
+protocol ParSONDeserializable {
     static func create(inContext context: NSManagedObjectContext) -> Self
-    func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws
+    func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws
 }
 
-final class JSONObject
+final class ParSON
 {
     private var array: [Any]?
     private var dictionary: [String: Any]?
@@ -50,7 +50,7 @@ final class JSONObject
             return value
         }
         
-        throw JSONError.TypeMismatch
+        throw ParSONError.TypeMismatch
     }
 
     private func valueAtPath(_ keyPath: String) throws -> Any
@@ -76,7 +76,7 @@ final class JSONObject
             charset.insert("]")
             let innerComponents = component.components(separatedBy: charset)
             
-            if innerComponents.count > 1, innerComponents.count < 3 { throw JSONError.InvalidString }
+            if innerComponents.count > 1, innerComponents.count < 3 { throw ParSONError.InvalidString }
             
             let key = innerComponents.first
             
@@ -123,16 +123,16 @@ final class JSONObject
     
     
     
-    func objectForKey(_ key: String) throws -> JSONObject {
+    func objectForKey(_ key: String) throws -> ParSON {
         
-        var retVal: JSONObject?
+        var retVal: ParSON?
         
         if let dict: [String: AnyObject] = try? value(forKeyPath: key) {
-            retVal = JSONObject(collection: dict)
+            retVal = ParSON(collection: dict)
         }
         
         if let array: [AnyObject] = try? value(forKeyPath: key) {
-            retVal = JSONObject(collection: array)
+            retVal = ParSON(collection: array)
         }
         
         return retVal!
@@ -154,13 +154,13 @@ final class JSONObject
         }
     }
     
-    func enumerateObjects(ofType type: JSONAble.Type, forKeyPath keyPath: String, context: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType), enumerationsClosure: (_ element: JSONAble) -> Void) {
+    func enumerateObjects(ofType type: ParSONDeserializable.Type, forKeyPath keyPath: String, context: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType), enumerationsClosure: (_ element: ParSONDeserializable) -> Void) {
         
         for index in 0...self.countForRelationship(keyPath) - 1 {
-            let deserialisedJSONObject = type.create(inContext: context)
-            try? deserialisedJSONObject.fromJSON(self, context: context, keyPath: "\(keyPath)[\(index)]")
+            let deserialisedParSONObject = type.create(inContext: context)
+            try? deserialisedParSONObject.deserialize(self, context: context, keyPath: "\(keyPath)[\(index)]")
             
-            enumerationsClosure(deserialisedJSONObject)
+            enumerationsClosure(deserialisedParSONObject)
         }
     }
     
