@@ -26,18 +26,18 @@ let jsonData =
 	
 you can extract the first two dictionaries like so
 ```swift
-let jsonObject = JSONObject(collection: jsonData)
+let parsonObject = ParSON(collection: jsonData)
 
-let firstDictionary: [String: AnyObject] = try! jsonObject.value(forKeyPath: "first")
-let secondDictionary: [String: AnyObject] = try! jsonObject.value(forKeyPath: "second")
+let firstDictionary: [String: AnyObject] = try! parsonObject.value(forKeyPath: "first")
+let secondDictionary: [String: AnyObject] = try! parsonObject.value(forKeyPath: "second")
 ```
 	
 and you can then access the values normally as one would traverse a swift collection.
 
 If however you wish to iterate through the json and get a value directly, you can.
 ```swift
-let nameOfFirstStuff: String = try! jsonObject.value(forKeyPath: "first.name")
-let nameOfSecondStuff: String = try! jsonObject.value(forKeyPath: "second.name")
+let nameOfFirstStuff: String = try! parsonObject.value(forKeyPath: "first.name")
+let nameOfSecondStuff: String = try! parsonObject.value(forKeyPath: "second.name")
 ```	
 So dictionaries should be pretty straight forward each successive key inside it's parent dicitonary is prepended with a "."
 
@@ -45,8 +45,8 @@ So dictionaries should be pretty straight forward each successive key inside it'
 
 For arrays however the syntax is a little different
 ```swift
-let upperCaseAlphabetFirstLetter: [String] = try! jsonObject.value(forKeyPath: "first.upperCase[0]") // 'A'
-let thirdNumericalItem: [String] = try! jsonObject.value(forKeyPath: "second.data[2]") // '3'
+let upperCaseAlphabetFirstLetter: [String] = try! parsonObject.value(forKeyPath: "first.upperCase[0]") // 'A'
+let thirdNumericalItem: [String] = try! parsonObject.value(forKeyPath: "second.data[2]") // '3'
 ```	
 just place the index you wish to access inside square brackets, this also works for nested array
 ```swift
@@ -63,20 +63,20 @@ let nestedJSONArray =
 	"addOn": ["and", "good", "luck"]
 ]
 
-let jsonObject = JSONObject(collection: nestedJSONArray)
+let parsonObject = ParSON(collection: nestedJSONArray)
 
-var greeting: String = try! jsonObject.value(forKeyPath: "response[0][0]") // 'hello' 
-greeting.append(" \(try! jsonObject.value(forKeyPath: "response[0][1]") as String).") // 'hello there. '
-greeting.append(" \(try! jsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup'
-greeting.append(" \(try! jsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup of'
-greeting.append(" \(try! jsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup of tea?'
+var greeting: String = try! parsonObject.value(forKeyPath: "response[0][0]") // 'hello' 
+greeting.append(" \(try! parsonObject.value(forKeyPath: "response[0][1]") as String).") // 'hello there. '
+greeting.append(" \(try! parsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup'
+greeting.append(" \(try! parsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup of'
+greeting.append(" \(try! parsonObject.value(forKeyPath: "response[0][1]") as String)") // 'hello there. cup of tea?'
 
-var leaving = jsonObject.value(forKeyPath: "response[1][0]") // 'good'
-leaving.append( " \(try! jsonObject.value(forKeyPath: "response[1][0]") as String).") // 'good bye.'
+var leaving = parsonObject.value(forKeyPath: "response[1][0]") // 'good'
+leaving.append( " \(try! parsonObject.value(forKeyPath: "response[1][0]") as String).") // 'good bye.'
 
-leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[0]") as String)") // 'good bye. and'
-leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[1]") as String)") // 'good bye. and good'
-leaving.append( " \(try! jsonObject.value(forKeyPath: "addOn[2]") as String).") // 'good bye. and good luck.'
+leaving.append( " \(try! parsonObject.value(forKeyPath: "addOn[0]") as String)") // 'good bye. and'
+leaving.append( " \(try! parsonObject.value(forKeyPath: "addOn[1]") as String)") // 'good bye. and good'
+leaving.append( " \(try! parsonObject.value(forKeyPath: "addOn[2]") as String).") // 'good bye. and good luck.'
 ```	
 ## Collection Enumeration
 
@@ -97,9 +97,9 @@ let jsonData =
 	]
 ]
 
-let jsonObject = JSONObject(collection: jsonData)
+let parsonObject = ParSON(collection: jsonData)
 
-jsonObject.enumerateObject(atKeyPath: "employees") { (keyIndex, element) in
+parsonObject.enumerateObject(atKeyPath: "employees") { (keyIndex, element) in
 	print("element: \(element) at index \(keyIndex)")
 }
 
@@ -117,20 +117,20 @@ jsonObject.enumerateObject(atKeyPath: "managers") { (keyIndex, element) in
 
 ## Object Enumeration
 
-Generally you will pull values from the json and will be assigned to an instance variable of a class, the larger the class the more tedious this can become, JSONObject however offers a way for you to dictate how each class will map the values and when enumerating you will get the object with the mapped values assigned.
+Generally you will pull values from the JSON and then assign the value to an instance variable of a class, the larger the class the more tedious this can become, ParSON however offers a way for you to dictate how each class will map the values and when enumerating you will get the object with the mapped values assigned.
 
-**first your class should conform to the protocol JSONAble**
+**First, your class should conform to the protocol ParSONDeserializable**
 
 ``` swift
-protocol JSONAble 
+protocol ParSONDeserializable 
 {
 	static func create(inContext context: NSManagedObjectContext) -> Self
-	func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws
+	func deserialize(_ parsonObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws
 }
 ```
 **Example**
 ```swift
-fileprivate class JSONableTestable: JSONAble
+fileprivate class JSONableTestable: ParSONDeserializable
 {
     private(set) var text: String?
     private(set) var id: String?
@@ -139,9 +139,9 @@ fileprivate class JSONableTestable: JSONAble
 	return .init()
     }
 
-    func fromJSON(_ JSONObject: JSONObject, context: NSManagedObjectContext, keyPath: String) throws {
-	self.id = try JSONObject.value(forKeyPath: "\(keyPath).id")
-	self.text = try JSONObject.value(forKeyPath: "\(keyPath).text")
+    func deserialize(_ parsonObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws {
+	self.id = try parsonObject.value(forKeyPath: "\(keyPath).id")
+	self.text = try parsonObject.value(forKeyPath: "\(keyPath).text")
     }
 }
 
@@ -158,7 +158,7 @@ let jsonData =
 	]
 ]
 	
-	let jsonObject = JSONObject(collection: jsonData)
+	let jsonObject = ParSON(collection: jsonData)
 	
 	jsonObject.enumerateObjects(ofType: JSONableTestable.self, forKeyPath: "testables") { (jsonableObject) in
             
@@ -178,6 +178,6 @@ let jsonData =
 ```	
 ## Core Data
 
-You may notice that the JSONAble protocol and a few of the other method have a method for an NSManagedObject context, this is in case you are using core data objects, you can pass the context through to create the objects inside the context.
+You may notice that the ParSONDeserializable protocol and a few of the other methods have a parameter for an **NSManagedObjectContext**, this is in case you are using core data objects, you can pass the context through to create the objects inside the context.
 
 ## Exception Handling TBD
