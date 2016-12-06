@@ -24,7 +24,7 @@ let jsonData =
 ]
 ```
 	
-you can extract the first two dictionaries like so
+#### Dictionaries
 ```swift
 let parsonObject = ParSON(collection: jsonData)
 
@@ -43,7 +43,7 @@ So dictionaries should be pretty straight forward each successive key inside it'
 
 **e.g** "this.that.thisOneInsideThat.other"
 
-For arrays however the syntax is a little different
+#### Arrays
 ```swift
 let upperCaseAlphabetFirstLetter: [String] = try! parsonObject.value(forKeyPath: "first.upperCase[0]") // 'A'
 let thirdNumericalItem: [String] = try! parsonObject.value(forKeyPath: "second.data[2]") // '3'
