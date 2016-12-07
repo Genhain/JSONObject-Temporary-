@@ -74,22 +74,32 @@ final class ParSON
             var charset = CharacterSet()
             charset.insert("[")
             charset.insert("]")
-            let innerComponents = component.components(separatedBy: charset)
             
-            if innerComponents.count > 1, innerComponents.count < 3 { throw ParSONError.InvalidString }
+            func matches(for regex: String, in text: String) -> [String] {
+                
+                do {
+                    let regex = try NSRegularExpression(pattern: regex)
+                    let nsString = text as NSString
+                    let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
+                    return results.map { nsString.substring(with: $0.range)}
+                } catch let error {
+                    print("invalid regex: \(error.localizedDescription)")
+                    return []
+                }
+            }
             
-            let key = innerComponents.first
+            let innerComponents = component.matchingStrings(regex: "\\[(.*?)\\]")
             
-            if innerComponents.count > 1 {
-                for innerComponent in innerComponents {
-                    if let index = Int(innerComponent) {
-                        arrayOfIndices.append(index)
-                    }
+            let key = component.components(separatedBy: charset).first!
+            
+            for innerComponent in innerComponents {
+                if let index = Int(innerComponent.last!) {
+                    arrayOfIndices.append(index)
                 }
             }
         
             if let dict = valueAtPath as? [String:Any] {
-                if let value = dict[key!] {
+                if let value = dict[key] {
                     valueAtPath = value
                 }
             }
@@ -156,7 +166,13 @@ final class ParSON
     
     func enumerateObjects(ofType type: ParSONDeserializable.Type, forKeyPath keyPath: String, context: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType), enumerationsClosure: (_ element: ParSONDeserializable) -> Void) {
         
-        for index in 0...self.countForRelationship(keyPath) - 1 {
+        let relationShipCount = countForRelationship(keyPath)
+        
+        guard relationShipCount > 0 else {
+            return
+        }
+        
+        for index in 0...relationShipCount - 1 {
             let deserialisedParSONObject = type.create(inContext: context)
             try? deserialisedParSONObject.deserialize(self, context: context, keyPath: "\(keyPath)[\(index)]")
             
@@ -178,4 +194,28 @@ final class ParSON
         return 0
     }
     
+}
+
+extension String {
+    func matchingStrings(regex: String) -> [[String]] {
+        guard let regex = try? NSRegularExpression(pattern: regex, options: []) else { return [] }
+        let nsString = self as NSString
+        let results  = regex.matches(in: self, options: [], range: NSMakeRange(0, nsString.length))
+        return results.map { result in
+            (0..<result.numberOfRanges).map { result.rangeAt($0).location != NSNotFound
+                ? nsString.substring(with: result.rangeAt($0))
+                : ""
+            }
+        }
+    }
+}
+
+extension Array where Element: Equatable
+{
+    mutating func removeObject(object: Element) {
+        
+        if let index = index(of: object) {
+            remove(at: index)
+        }
+    }
 }

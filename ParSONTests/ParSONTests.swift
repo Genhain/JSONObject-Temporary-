@@ -81,10 +81,10 @@ class ParSONTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(spy.id, "1")
-        XCTAssertEqual(spy.posts?[0]["titleText"] as! String, "test1")
-        XCTAssertEqual(spy.posts?[0]["id"] as! String, "1")
-        XCTAssertEqual(spy.posts?[1]["titleText"] as! String, "test2")
-        XCTAssertEqual(spy.posts?[1]["id"] as! String, "2")
+        XCTAssertEqual(spy.posts?[0]["titleText"] as? String, "test1")
+        XCTAssertEqual(spy.posts?[0]["id"] as? String, "1")
+        XCTAssertEqual(spy.posts?[1]["titleText"] as? String, "test2")
+        XCTAssertEqual(spy.posts?[1]["id"] as? String, "2")
     }
     
     func testJSONValue_array2CountIntoDictionary_ShouldEqualData()
@@ -130,18 +130,18 @@ class ParSONTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(spy.id, "1")
-        XCTAssertEqual(spy.posts?[0]["titleText"] as! String, "test1")
-        XCTAssertEqual(spy.posts?[0]["id"] as! String, "1")
-        XCTAssertEqual(spy.posts?[1]["titleText"] as! String, "test2")
-        XCTAssertEqual(spy.posts?[1]["id"] as! String, "2")
+        XCTAssertEqual(spy.posts?[0]["titleText"] as? String, "test1")
+        XCTAssertEqual(spy.posts?[0]["id"] as? String, "1")
+        XCTAssertEqual(spy.posts?[1]["titleText"] as? String, "test2")
+        XCTAssertEqual(spy.posts?[1]["id"] as? String, "2")
         
         try? spy.deserialize(jsonObj, context: inMemoryPersistentContainer.viewContext, keyPath: "[1]")
         
         XCTAssertEqual(spy.id, "2")
-        XCTAssertEqual(spy.posts?[0]["titleText"] as! String, "test3")
-        XCTAssertEqual(spy.posts?[0]["id"] as! String, "3")
-        XCTAssertEqual(spy.posts?[1]["titleText"] as! String, "test4")
-        XCTAssertEqual(spy.posts?[1]["id"] as! String, "4")
+        XCTAssertEqual(spy.posts?[0]["titleText"] as? String, "test3")
+        XCTAssertEqual(spy.posts?[0]["id"] as? String, "3")
+        XCTAssertEqual(spy.posts?[1]["titleText"] as? String, "test4")
+        XCTAssertEqual(spy.posts?[1]["id"] as? String, "4")
     }
     
     func testEnumerateObjects_array5Count_ShouldEqualData()
@@ -615,6 +615,5 @@ class ParSONTests: XCTestCase {
         
         XCTAssertEqual(count, 3)
     }
-    
-    
+        
 }

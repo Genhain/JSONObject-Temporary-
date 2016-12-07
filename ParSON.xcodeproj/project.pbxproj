@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		082CE9E31DF817090061CFDC /* ParSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082CE9E11DF816FA0061CFDC /* ParSONTests.swift */; };
 		087F77871DF671BE00B5BF88 /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */; };
 		087F77881DF671BE00B5BF88 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */; };
 		087F77891DF671BE00B5BF88 /* ParSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F77831DF66F4500B5BF88 /* ParSON.swift */; };
@@ -16,7 +17,6 @@
 		08C174DB1DF40EEF00583DEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174D91DF40EEF00583DEE /* Main.storyboard */; };
 		08C174E01DF40EEF00583DEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C174DF1DF40EEF00583DEE /* Assets.xcassets */; };
 		08C174E31DF40EEF00583DEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174E11DF40EEF00583DEE /* LaunchScreen.storyboard */; };
-		08C1750B1DF40F3A00583DEE /* ParSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175071DF40F3A00583DEE /* ParSONTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		082CE9E11DF816FA0061CFDC /* ParSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParSONTests.swift; path = ParSONTests/ParSONTests.swift; sourceTree = SOURCE_ROOT; };
 		087F77831DF66F4500B5BF88 /* ParSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParSON.swift; sourceTree = "<group>"; };
 		08C174D21DF40EEF00583DEE /* ParSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174D51DF40EEF00583DEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		08C174EF1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08C174F41DF40EEF00583DEE /* ParSONUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParSONUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174FA1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08C175071DF40F3A00583DEE /* ParSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParSONTests.swift; sourceTree = "<group>"; };
 		08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataClass.swift"; path = "../TestEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataProperties.swift"; path = "../TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,7 +106,7 @@
 				08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */,
 				08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */,
 				087F77831DF66F4500B5BF88 /* ParSON.swift */,
-				08C175071DF40F3A00583DEE /* ParSONTests.swift */,
+				082CE9E11DF816FA0061CFDC /* ParSONTests.swift */,
 				08C174D51DF40EEF00583DEE /* AppDelegate.swift */,
 				08C174D71DF40EEF00583DEE /* ViewController.swift */,
 				08C174D91DF40EEF00583DEE /* Main.storyboard */,
@@ -284,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C1750B1DF40F3A00583DEE /* ParSONTests.swift in Sources */,
+				082CE9E31DF817090061CFDC /* ParSONTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = EKCZMB6S69;
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ParSON/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BF.ParSON;
@@ -441,6 +442,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = EKCZMB6S69;
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ParSON/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BF.ParSON;
@@ -455,6 +457,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = EKCZMB6S69;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = ParSONTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BF.JSONObjectTests;
@@ -470,6 +473,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = EKCZMB6S69;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = ParSONTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BF.JSONObjectTests;
