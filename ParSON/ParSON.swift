@@ -10,24 +10,24 @@ import Foundation
 import UIKit
 import CoreData
 
-enum ParSONError : Error {
+public enum ParSONError : Error {
     case NoValueForKey(String)
     case IndexOutOfRange
     case TypeMismatch
     case InvalidString
 }
 
-protocol ParSONDeserializable {
+public protocol ParSONDeserializable {
     static func create(inContext context: NSManagedObjectContext) -> Self
     func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws
 }
 
-final class ParSON
+public final class ParSON
 {
     private var array: [Any]?
     private var dictionary: [String: Any]?
     
-    init<T: Any>(collection: T) where T: Collection {
+    public init<T: Any>(collection: T) where T: Collection {
         
         self.array = nil
         self.dictionary = nil
@@ -42,7 +42,7 @@ final class ParSON
         }
     }
     
-    func value<A: Any>( forKeyPath key: String) throws -> A {
+    public func value<A: Any>( forKeyPath key: String) throws -> A {
         
         let valueAtPath = try? self.valueAtPath(key)
         
@@ -133,7 +133,7 @@ final class ParSON
     
     
     
-    func objectForKey(_ key: String) throws -> ParSON {
+    public func objectForKey(_ key: String) throws -> ParSON {
         
         var retVal: ParSON?
         
@@ -148,7 +148,7 @@ final class ParSON
         return retVal!
     }
    
-    func enumerateObjects(atKeyPath keypath: String, enumerationClosure: ( _ indexKey: String, _ element: AnyObject) -> Void)  {
+    public func enumerateObjects(atKeyPath keypath: String, enumerationClosure: ( _ indexKey: String, _ element: AnyObject) -> Void)  {
         
         let value = try? self.valueAtPath(keypath)
         
@@ -164,7 +164,7 @@ final class ParSON
         }
     }
     
-    func enumerateObjects(ofType type: ParSONDeserializable.Type, forKeyPath keyPath: String, context: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType), enumerationsClosure: (_ element: ParSONDeserializable) -> Void) {
+    public func enumerateObjects(ofType type: ParSONDeserializable.Type, forKeyPath keyPath: String, context: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType), enumerationsClosure: (_ element: ParSONDeserializable) -> Void) {
         
         let relationShipCount = countForRelationship(keyPath)
         

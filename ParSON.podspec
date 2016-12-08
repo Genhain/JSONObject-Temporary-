@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ParSON"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A lightweight JSON Parser to help avoid convoluted nested iteration."
 
   # This description is used to generate tags and improve search results.
@@ -92,7 +92,7 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "ParSON/*.swift"
-  s.exclude_files = "Classes/Exclude"
+  s.exclude_files = "ParSON/AppDelegate.swift", "ParSON/ViewController.swift"
 
   # s.public_header_files = "Classes/**/*.h"
 
