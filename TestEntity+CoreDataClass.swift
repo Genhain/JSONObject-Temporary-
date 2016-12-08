@@ -19,13 +19,13 @@ public class TestEntity: NSManagedObject, ParSONDeserializable
     private(set) var lastContextForFromJSON: NSManagedObjectContext?
     private(set) var lastKeyPath: String?
     
-    static func create(inContext context: NSManagedObjectContext) -> Self {
+    public static func create(inContext context: NSManagedObjectContext) -> Self {
         self.wasCreateCalled = true
         self.lastContextForCreate = context
         return .init(entity: NSEntityDescription.entity(forEntityName: "TestEntity", in: context)!, insertInto: context)
     }
     
-    func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws {
+    public func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws {
         self.wasFromJSONCalled = true
         self.lastJsonObject = parSONObject
         self.lastContextForFromJSON = context

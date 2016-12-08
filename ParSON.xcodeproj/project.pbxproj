@@ -12,7 +12,6 @@
 		087F77871DF671BE00B5BF88 /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */; };
 		087F77881DF671BE00B5BF88 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */; };
 		087F77891DF671BE00B5BF88 /* ParSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F77831DF66F4500B5BF88 /* ParSON.swift */; };
-		087F778B1DF671BE00B5BF88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C174D71DF40EEF00583DEE /* ViewController.swift */; };
 		087F778C1DF671BE00B5BF88 /* JSONObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08C174DC1DF40EEF00583DEE /* JSONObject.xcdatamodeld */; };
 		08C174DB1DF40EEF00583DEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174D91DF40EEF00583DEE /* Main.storyboard */; };
 		08C174E01DF40EEF00583DEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C174DF1DF40EEF00583DEE /* Assets.xcassets */; };
@@ -41,7 +40,6 @@
 		087F77831DF66F4500B5BF88 /* ParSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParSON.swift; sourceTree = "<group>"; };
 		08C174D21DF40EEF00583DEE /* ParSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174D51DF40EEF00583DEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		08C174D71DF40EEF00583DEE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		08C174DA1DF40EEF00583DEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		08C174DD1DF40EEF00583DEE /* JSONObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JSONObject.xcdatamodel; sourceTree = "<group>"; };
 		08C174DF1DF40EEF00583DEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				087F77831DF66F4500B5BF88 /* ParSON.swift */,
 				082CE9E11DF816FA0061CFDC /* ParSONTests.swift */,
 				08C174D51DF40EEF00583DEE /* AppDelegate.swift */,
-				08C174D71DF40EEF00583DEE /* ViewController.swift */,
 				08C174D91DF40EEF00583DEE /* Main.storyboard */,
 				08C174DF1DF40EEF00583DEE /* Assets.xcassets */,
 				08C174E11DF40EEF00583DEE /* LaunchScreen.storyboard */,
@@ -275,7 +272,6 @@
 				087F77871DF671BE00B5BF88 /* TestEntity+CoreDataClass.swift in Sources */,
 				087F77881DF671BE00B5BF88 /* TestEntity+CoreDataProperties.swift in Sources */,
 				087F77891DF671BE00B5BF88 /* ParSON.swift in Sources */,
-				087F778B1DF671BE00B5BF88 /* ViewController.swift in Sources */,
 				087F778C1DF671BE00B5BF88 /* JSONObject.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
