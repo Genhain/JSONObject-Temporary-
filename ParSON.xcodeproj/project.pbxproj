@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		082CE9E31DF817090061CFDC /* ParSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082CE9E11DF816FA0061CFDC /* ParSONTests.swift */; };
 		082CE9E41DF828EA0061CFDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C174D51DF40EEF00583DEE /* AppDelegate.swift */; };
-		087F77871DF671BE00B5BF88 /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */; };
-		087F77881DF671BE00B5BF88 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */; };
+		0833117C1DFAED0B007D7DF4 /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083311751DFA9CD8007D7DF4 /* TestEntity+CoreDataClass.swift */; };
+		0833117D1DFAED0B007D7DF4 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083311761DFA9CD8007D7DF4 /* TestEntity+CoreDataProperties.swift */; };
 		087F77891DF671BE00B5BF88 /* ParSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087F77831DF66F4500B5BF88 /* ParSON.swift */; };
-		087F778C1DF671BE00B5BF88 /* JSONObject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08C174DC1DF40EEF00583DEE /* JSONObject.xcdatamodeld */; };
+		087F778C1DF671BE00B5BF88 /* ParSON.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08C174DC1DF40EEF00583DEE /* ParSON.xcdatamodeld */; };
 		08C174DB1DF40EEF00583DEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174D91DF40EEF00583DEE /* Main.storyboard */; };
 		08C174E01DF40EEF00583DEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C174DF1DF40EEF00583DEE /* Assets.xcassets */; };
 		08C174E31DF40EEF00583DEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C174E11DF40EEF00583DEE /* LaunchScreen.storyboard */; };
@@ -37,11 +37,13 @@
 
 /* Begin PBXFileReference section */
 		082CE9E11DF816FA0061CFDC /* ParSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParSONTests.swift; path = ParSONTests/ParSONTests.swift; sourceTree = SOURCE_ROOT; };
+		083311751DFA9CD8007D7DF4 /* TestEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		083311761DFA9CD8007D7DF4 /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		087F77831DF66F4500B5BF88 /* ParSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParSON.swift; sourceTree = "<group>"; };
 		08C174D21DF40EEF00583DEE /* ParSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174D51DF40EEF00583DEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08C174DA1DF40EEF00583DEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		08C174DD1DF40EEF00583DEE /* JSONObject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JSONObject.xcdatamodel; sourceTree = "<group>"; };
+		08C174DD1DF40EEF00583DEE /* ParSON.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ParSON.xcdatamodel; sourceTree = "<group>"; };
 		08C174DF1DF40EEF00583DEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08C174E21DF40EEF00583DEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08C174E41DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,8 +51,6 @@
 		08C174EF1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08C174F41DF40EEF00583DEE /* ParSONUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParSONUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C174FA1DF40EEF00583DEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataClass.swift"; path = "../TestEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TestEntity+CoreDataProperties.swift"; path = "../TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +101,6 @@
 		08C174D41DF40EEF00583DEE /* ParSON */ = {
 			isa = PBXGroup;
 			children = (
-				08C1750F1DF419C400583DEE /* TestEntity+CoreDataClass.swift */,
-				08C175101DF419C400583DEE /* TestEntity+CoreDataProperties.swift */,
 				087F77831DF66F4500B5BF88 /* ParSON.swift */,
 				082CE9E11DF816FA0061CFDC /* ParSONTests.swift */,
 				08C174D51DF40EEF00583DEE /* AppDelegate.swift */,
@@ -110,7 +108,7 @@
 				08C174DF1DF40EEF00583DEE /* Assets.xcassets */,
 				08C174E11DF40EEF00583DEE /* LaunchScreen.storyboard */,
 				08C174E41DF40EEF00583DEE /* Info.plist */,
-				08C174DC1DF40EEF00583DEE /* JSONObject.xcdatamodeld */,
+				08C174DC1DF40EEF00583DEE /* ParSON.xcdatamodeld */,
 			);
 			path = ParSON;
 			sourceTree = "<group>";
@@ -118,6 +116,8 @@
 		08C174EC1DF40EEF00583DEE /* ParSONTests */ = {
 			isa = PBXGroup;
 			children = (
+				083311751DFA9CD8007D7DF4 /* TestEntity+CoreDataClass.swift */,
+				083311761DFA9CD8007D7DF4 /* TestEntity+CoreDataProperties.swift */,
 				08C174EF1DF40EEF00583DEE /* Info.plist */,
 			);
 			path = ParSONTests;
@@ -269,10 +269,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				082CE9E41DF828EA0061CFDC /* AppDelegate.swift in Sources */,
-				087F77871DF671BE00B5BF88 /* TestEntity+CoreDataClass.swift in Sources */,
-				087F77881DF671BE00B5BF88 /* TestEntity+CoreDataProperties.swift in Sources */,
 				087F77891DF671BE00B5BF88 /* ParSON.swift in Sources */,
-				087F778C1DF671BE00B5BF88 /* JSONObject.xcdatamodeld in Sources */,
+				0833117C1DFAED0B007D7DF4 /* TestEntity+CoreDataClass.swift in Sources */,
+				0833117D1DFAED0B007D7DF4 /* TestEntity+CoreDataProperties.swift in Sources */,
+				087F778C1DF671BE00B5BF88 /* ParSON.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,13 +549,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		08C174DC1DF40EEF00583DEE /* JSONObject.xcdatamodeld */ = {
+		08C174DC1DF40EEF00583DEE /* ParSON.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				08C174DD1DF40EEF00583DEE /* JSONObject.xcdatamodel */,
+				08C174DD1DF40EEF00583DEE /* ParSON.xcdatamodel */,
 			);
-			currentVersion = 08C174DD1DF40EEF00583DEE /* JSONObject.xcdatamodel */;
-			path = JSONObject.xcdatamodeld;
+			currentVersion = 08C174DD1DF40EEF00583DEE /* ParSON.xcdatamodel */;
+			path = ParSON.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
