@@ -161,7 +161,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "") { (keyIndex, element) in
+        try? SUT.enumerateObjects() { (keyIndex, element) in
             XCTAssertEqual(Int(keyIndex)!, index)
             XCTAssertEqual(data[index], String(describing: element))
             index += 1
@@ -190,7 +190,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "") { (keyIndex, element) in
+        try? SUT.enumerateObjects() { (keyIndex, element) in
             XCTAssertEqual(Int(keyIndex)!, index)
             XCTAssertEqual(data[index], String(describing: element))
             index += 1
@@ -214,7 +214,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "") { (keyIndex, element) in
+        try? SUT.enumerateObjects() { (keyIndex, element) in
             XCTAssertEqual("\(index)", keyIndex)
             
             XCTAssertEqual(data[index], element as! [String : String])
@@ -239,7 +239,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "") { (keyIndex, element) in
+        try? SUT.enumerateObjects() { (keyIndex, element) in
             XCTAssertEqual(data[keyIndex], String(describing: element) )
             index += 1
         }
@@ -260,7 +260,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "one") { (keyIndex, element) in
+        try? SUT.enumerateObjects(atKeyPath: "one") { (keyIndex, element) in
             XCTAssertEqual(data["one"]?[index], String(describing: element) )
             index += 1
         }
@@ -281,7 +281,7 @@ class ParSONTests: XCTestCase {
         
         // Assert
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "two") { (keyIndex, element) in
+        try? SUT.enumerateObjects(atKeyPath: "two") { (keyIndex, element) in
             XCTAssertEqual(data["two"]?[index], String(describing: element) )
             index += 1
         }
@@ -305,7 +305,7 @@ class ParSONTests: XCTestCase {
         
         // Act
         var index = 0
-        SUT.enumerateObjects(atKeyPath: "a") { (keyIndex, element) in
+        try? SUT.enumerateObjects(atKeyPath: "a") { (keyIndex, element) in
             let array = data["a"] as? [String]
             // Assert
             XCTAssertEqual(array?[index], String(describing: element) )
@@ -315,7 +315,7 @@ class ParSONTests: XCTestCase {
         XCTAssertEqual(3, index)
         
         index = 0
-        SUT.enumerateObjects(atKeyPath: "two") { (keyIndex, element) in
+        try? SUT.enumerateObjects(atKeyPath: "two") { (keyIndex, element) in
             let array = data["two"] as? [Int]
             // Assert
             XCTAssertEqual(array?[index], element as? Int)
@@ -325,7 +325,7 @@ class ParSONTests: XCTestCase {
         XCTAssertEqual(4, index)
         
         index = 0
-        SUT.enumerateObjects(atKeyPath: "tres.three") { (keyIndex, element) in
+        try? SUT.enumerateObjects(atKeyPath: "tres.three") { (keyIndex, element) in
             guard let dict = data["tres"] as? [String: Any] else { XCTFail(); return }
             guard let innerDict = dict["three"] as? [String: Int] else { XCTFail(); return }
             // Assert
@@ -615,5 +615,179 @@ class ParSONTests: XCTestCase {
         
         XCTAssertEqual(count, 3)
     }
+    
+    //MARK: Error Handling
+    
+    func testArray_IncorrectSyntax_ThrowsInvalidStringError()
+    {
+        // Arrange
+        let data =
+            [
+                "a",
+                "b",
+                "c"
+        ]
         
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        do {
+            try _ = SUT.value(forKeyPath: "[0") as String
+        } catch {
+            XCTAssertEqual(error as! ParSONError, ParSONError.InvalidString)
+        }
+    }
+    
+    func testArray_IncorrectSyntax_ThrowsMisMatchedTypeError()
+    {
+        // Arrange
+        let data =
+            [
+                "a",
+                "b",
+                "c"
+        ]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        do {
+            try _ = SUT.value(forKeyPath: "[0]") as Int
+        } catch {
+            XCTAssertEqual(error as! ParSONError, ParSONError.TypeMismatch)
+        }
+    }
+    
+    func testArray_IncorrectSyntax_ThrowsError()
+    {
+        // Arrange
+        let data =
+        [
+                "a",
+                "b",
+                "c",
+        ]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0", throwsError: ParSONError.InvalidString, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "0]", throwsError: ParSONError.InvalidString, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[1", throwsError: ParSONError.InvalidString, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "1]", throwsError: ParSONError.InvalidString, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[2", throwsError: ParSONError.InvalidString, forType: String.self))
+    }
+    
+    func testValueAtKeyPath_NestedArrayIncorrectStringSyntax_throwsInvalidStringError()
+    {
+        // Arrange
+        let data =
+        [
+            ["1","2","3"]
+        ]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0][0", throwsError: ParSONError.InvalidString, forType: String.self))
+        
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0]0]", throwsError: ParSONError.InvalidString, forType: String.self))
+        
+        XCTAssertTrue(self.value(SUT, forKeyPath: "]0[", throwsError: ParSONError.InvalidString, forType: String.self))
+        
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0]]1[", throwsError: ParSONError.InvalidString, forType: String.self))
+        
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[]", throwsError: ParSONError.InvalidString, forType: String.self))
+        
+         XCTAssertTrue(self.value(SUT, forKeyPath: "[0][]", throwsError: ParSONError.InvalidString, forType: String.self))
+    }
+    
+    func testValueAtPath_TypeMisMatch_ThrowMismatchTypeError()
+    {
+        // Arrange
+        let data =
+        [
+            [1,2,3],
+            ["a", "b", "c"]
+        ]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0][0]", throwsError: ParSONError.TypeMismatch, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0][1]", throwsError: ParSONError.TypeMismatch, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[0][2]", throwsError: ParSONError.TypeMismatch, forType: String.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[1][0]", throwsError: ParSONError.TypeMismatch, forType: Int.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[1][1]", throwsError: ParSONError.TypeMismatch, forType: Int.self))
+        XCTAssertTrue(self.value(SUT, forKeyPath: "[1][2]", throwsError: ParSONError.TypeMismatch, forType: Int.self))
+    }
+    
+    func testValueForKeyPath_Array_ThrowsIndexOutOfRange()
+    {
+        // Arrange
+        let data =
+        [
+            [1,2,3],
+            ["a", "b", "c"]
+        ]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        XCTAssertTrue(value(SUT, forKeyPath: "[2]", throwsError: ParSONError.IndexOutOfRange, forType: Any.self))
+        
+        XCTAssertTrue(value(SUT, forKeyPath: "[3][1]", throwsError: ParSONError.IndexOutOfRange, forType: Any.self))
+        
+        XCTAssertTrue(value(SUT, forKeyPath: "[0][3]", throwsError: ParSONError.IndexOutOfRange, forType: Any.self))
+    }
+    
+    func testValueForKeyPath_Dictionary_ThrowsNoKeyForNameError()
+    {
+        // Arrange
+        let data =
+        [
+            "A": "a",
+            "B": [ "C": "c", "D": "d"]
+        ] as [String : Any]
+        
+        let SUT = ParSON(collection: data)
+        
+        // Act
+        // Assert
+        XCTAssertTrue(value(SUT, forKeyPath: "C", throwsError: ParSONError.NoValueForKey("C"), forType: Any.self))
+        
+        XCTAssertTrue(value(SUT, forKeyPath: "D", throwsError: ParSONError.NoValueForKey("D"), forType: Any.self))
+        
+        XCTAssertTrue(value(SUT, forKeyPath: "B.C.E", throwsError: ParSONError.NoValueForKey("E"), forType: Any.self))
+    }
+    
+    func value<A: Any>( _ SUT: ParSON, forKeyPath keypath: String,throwsError parsonError: ParSONError, forType: A.Type) -> Bool{
+        XCTAssertThrowsError(try SUT.value(forKeyPath: keypath) as A,"\(keypath) does not cause error to throw")
+        do {
+            try _ = SUT.value(forKeyPath: keypath) as A
+        } catch {
+            
+            switch parsonError {
+            case .NoValueForKey(let val):
+                switch error as! ParSONError {
+                case .NoValueForKey(let innerVal):
+                    return val == innerVal
+                default: break
+                    
+                }
+                break
+                
+                default: break
+            }
+            return error as! ParSONError == parsonError
+        }
+        
+        return false
+    }
 }

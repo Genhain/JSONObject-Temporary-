@@ -17,6 +17,19 @@ public enum ParSONError : Error {
     case InvalidString
 }
 
+extension ParSONError: Equatable {
+    
+}
+
+public func ==(lhs: ParSONError, rhs: ParSONError) -> Bool {
+    
+    if lhs._code == rhs._code {
+        return true
+    }
+    
+    return false
+}
+
 public protocol ParSONDeserializable {
     static func create(inContext context: NSManagedObjectContext) -> Self
     func deserialize(_ parSONObject: ParSON, context: NSManagedObjectContext, keyPath: String) throws
@@ -44,7 +57,7 @@ public final class ParSON
     
     public func value<A: Any>( forKeyPath key: String) throws -> A {
         
-        let valueAtPath = try? self.valueAtPath(key)
+        let valueAtPath = try self.valueAtPath(key)
         
         if let value = valueAtPath as? A {
             return value
@@ -75,32 +88,54 @@ public final class ParSON
             charset.insert("[")
             charset.insert("]")
             
-            func matches(for regex: String, in text: String) -> [String] {
+            let leftBrackets = component.matchingStrings(regex: "\\[")
+            let rightBrackets = component.matchingStrings(regex: "\\]")
+            
+            if leftBrackets.count != rightBrackets.count {
+                throw ParSONError.InvalidString
+            }
+            
+            if leftBrackets.count > 0,
+                rightBrackets.count > 0 {
                 
-                do {
-                    let regex = try NSRegularExpression(pattern: regex)
-                    let nsString = text as NSString
-                    let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
-                    return results.map { nsString.substring(with: $0.range)}
-                } catch let error {
-                    print("invalid regex: \(error.localizedDescription)")
-                    return []
+                let bracketedIndexValues = component.matchingStrings(regex: "\\[(.*?)\\]")
+                
+                if bracketedIndexValues.count != leftBrackets.count {
+                    throw ParSONError.InvalidString
+                }
+                
+                for item in bracketedIndexValues {
+                    if item.last!.isEmpty {
+                        throw ParSONError.InvalidString
+                    }
                 }
             }
             
-            let innerComponents = component.matchingStrings(regex: "\\[(.*?)\\]")
+            var componentsSeperatedByCharacterSet = component.components(separatedBy: charset)
+            componentsSeperatedByCharacterSet.removeObject(object: "")
             
-            let key = component.components(separatedBy: charset).first!
+            var hasAssignedValue = keyPath == "" ? true:false
             
-            for innerComponent in innerComponents {
-                if let index = Int(innerComponent.last!) {
-                    arrayOfIndices.append(index)
-                }
-            }
-        
             if let dict = valueAtPath as? [String:Any] {
+                
+                var key: String = ""
+                
+                if !componentsSeperatedByCharacterSet.isEmpty {
+                    key = componentsSeperatedByCharacterSet.removeFirst()
+                }
+                
                 if let value = dict[key] {
+                    hasAssignedValue = true
                     valueAtPath = value
+                }
+                else if key != "" {
+                    throw ParSONError.NoValueForKey(key)
+                }
+            }
+            
+            for innerComponent in componentsSeperatedByCharacterSet {
+                if let index = Int(innerComponent) {
+                    arrayOfIndices.append(index)
                 }
             }
             
@@ -108,23 +143,31 @@ public final class ParSON
                 
                 if !arrayOfIndices.isEmpty {
                     
-                    func nestedValue(inArray jsonArray: [Any], forIndices indices: inout [Int]) -> Any {
+                    func nestedValue(inArray jsonArray: [Any], forIndices indices: inout [Int])throws -> Any {
+                        
+                        guard jsonArray.count > indices.first! else { throw ParSONError.IndexOutOfRange }
                         
                         var value = jsonArray[indices.removeFirst()]
                         
                         if let newArray = value as? [AnyObject],
                             !indices.isEmpty {
-                            value = nestedValue(inArray: newArray, forIndices: &indices)
+                            value = try nestedValue(inArray: newArray, forIndices: &indices)
                         }
                         
                         return value
                     }
                     
-                    valueAtPath = nestedValue(inArray: array, forIndices: &arrayOfIndices)
+                    valueAtPath = try nestedValue(inArray: array, forIndices: &arrayOfIndices)
                 }
                 else {
                     valueAtPath = array
                 }
+                
+                hasAssignedValue = true
+            }
+            
+            if !hasAssignedValue {
+                throw ParSONError.NoValueForKey(component)
             }
         }
         
@@ -148,9 +191,9 @@ public final class ParSON
         return retVal!
     }
    
-    public func enumerateObjects(atKeyPath keypath: String, enumerationClosure: ( _ indexKey: String, _ element: AnyObject) -> Void)  {
+    public func enumerateObjects(atKeyPath keypath: String = "", enumerationClosure: ( _ indexKey: String, _ element: AnyObject) -> Void)throws  {
         
-        let value = try? self.valueAtPath(keypath)
+        let value = try self.valueAtPath(keypath)
         
         if let array = value as? [Any] {
             for(index, element) in array.enumerated() {
@@ -193,7 +236,6 @@ public final class ParSON
         
         return 0
     }
-    
 }
 
 extension String {
@@ -214,8 +256,10 @@ extension Array where Element: Equatable
 {
     mutating func removeObject(object: Element) {
         
-        if let index = index(of: object) {
-            remove(at: index)
+        while self.contains(object) {
+            if let index = index(of: object) {
+                remove(at: index)
+            }
         }
     }
 }
