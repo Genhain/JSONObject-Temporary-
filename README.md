@@ -180,4 +180,25 @@ let jsonData =
 
 You may notice that the ParSONDeserializable protocol and a few of the other methods have a parameter for an **NSManagedObjectContext**, this is in case you are using core data objects, you can pass the context through to create the objects inside the context.
 
-## Exception Handling TBD
+## Error Handling 
+
+There are 4 errors that can be raised while attempt to Parse
+
+```swift
+case NoValueForKey(String)
+case IndexOutOfRange
+case TypeMismatch
+case InvalidString
+```
+
+### NoValueForKey case
+Will be thrown when you attempt to access a value with a non-existent key. Either simply the key does not exist or you havent got the correct path to get to that key
+
+### IndexOutOfRange case
+Will be thrown when you attempt to access a value outside of the array range.
+
+### TypeMismatch case
+Will occur when you dont infer the correct type when using `value(forKeyPath: "example")`. For example if you tell it to infer a String with `as String` but the variable is a collection i.e array or dictionary.
+
+### InvalidString case
+This occurs when the string you attempt to parse with is the incorrect syntax, especially with arrays. e.g `"[0"` or `"2]"` or `[]` and any other that is not recognized 
